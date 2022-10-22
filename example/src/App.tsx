@@ -1,8 +1,11 @@
-import { useState } from 'react'
-import { Admin } from '@rbcrudapp/core'
+import { Admin } from '@rbcrudapp/core';
 
 function App() {
-  return <Admin id="id" />
+  return (
+    <Admin>
+      <span>Content</span>
+    </Admin>
+  );
 }
 
-export default App
+export default App;

@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react';
+import Layout from './layout/Layout';
 
 interface Props {
-  id: string;
+  id?: string;
+  children?: React.ReactElement;
 }
 
-export const Admin = ({ id }: Props) => {
-  return <div>Hello, {id}</div>;
+export const Admin = ({ children }: Props) => {
+  return <Layout>{children}</Layout>;
 };

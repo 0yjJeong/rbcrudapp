@@ -1,11 +1,15 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 
-import { Admin } from "./";
+import { Admin } from './';
 
-describe("Admin", () => {
-  it("should render", () => {
-    render(<Admin id="id" />);
-    expect(screen.getByText(/Hello, id/)).toBeInTheDocument();
+describe('Admin', () => {
+  it('should render', () => {
+    render(
+      <Admin>
+        <>Hello, world</>
+      </Admin>
+    );
+    expect(screen.getByText(/Hello, world/)).toBeInTheDocument();
   });
 });
