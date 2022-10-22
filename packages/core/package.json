@@ -6,12 +6,13 @@
   "module": "dist/core.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "watch": "tsdx watch",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint src --fix"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "react": "^18.2.0",
     "react-router-dom": "^6.4.2",
     "zustand": "^4.1.2"

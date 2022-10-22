@@ -1,11 +1,18 @@
 import React from 'react';
-import Layout from './layout/Layout';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-interface Props {
-  id?: string;
-  children?: React.ReactElement;
-}
+import DashboardPage from './pages/dashboard';
+import LoginPage from './pages/login';
 
-export const Admin = ({ children }: Props) => {
-  return <Layout>{children}</Layout>;
+export const Admin = () => {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<DashboardPage />} />
+          <Route path='/login' element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 };

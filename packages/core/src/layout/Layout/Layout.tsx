@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 interface Props {
-  children?: React.ReactElement;
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 const useStyles = makeStyles((theme) => ({

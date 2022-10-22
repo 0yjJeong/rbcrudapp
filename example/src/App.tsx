@@ -1,11 +1,7 @@
 import { Admin } from '@rbcrudapp/core';
 
 function App() {
-  return (
-    <Admin>
-      <span>Content</span>
-    </Admin>
-  );
+  return <Admin />;
 }
 
 export default App;
