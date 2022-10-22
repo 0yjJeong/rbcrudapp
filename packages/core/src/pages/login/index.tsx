@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import { LoginForm } from '../../types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +25,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+interface LoginPageProps {
+  submit?: (value: LoginForm) => Promise<any>;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ submit }) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  const onSubmit = (e: React.FormEvent) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onSubmit: React.FormEventHandler = async (e) => {
+    e.preventDefault();
+    if (submit) {
+      await submit({ username, password });
+    }
     navigate('/');
   };
 
@@ -41,11 +54,17 @@ const LoginPage = () => {
           className={classes.textInput}
           id='username'
           label='Username'
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
         <TextField
           className={classes.textInput}
           id='password'
           label='Password'
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
         <Button variant='contained' color='primary' type='submit'>
           Login
