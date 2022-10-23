@@ -1,10 +1,10 @@
-export interface Auth {
-    isLogin: boolean;
-    // token?:string;
-    // user?:any
+export interface User {
+  id?: string;
+  username?: string;
+  avatar?: string;
 }
 
 export interface LoginForm {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }

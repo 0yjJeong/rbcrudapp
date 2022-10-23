@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../../store/auth';
 import LoginPage from '../../pages/login';
+import { User } from '../../types';
 
 interface LoginBarrierProps {
+  getUser?: () => Promise<User>;
   children?: React.ReactElement | React.ReactElement[];
 }
 
-const LoginBarrier: React.FC<LoginBarrierProps> = ({ children }) => {
+const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
   const navigate = useNavigate();
-  const { isLogged, login } = useAuthStore();
+  const { isLogged, login, setUser } = useAuthStore();
 
-  if (isLogged) {
-    return <>{children}</>;
-  } else {
+  if (!isLogged) {
     return (
       <LoginPage
         submit={async ({ username, password }) => {
@@ -28,6 +28,12 @@ const LoginBarrier: React.FC<LoginBarrierProps> = ({ children }) => {
       />
     );
   }
+
+  if (!getUser) {
+    getUser().then((user) => setUser(user));
+  }
+
+  return <>{children}</>;
 };
 
 export default LoginBarrier;

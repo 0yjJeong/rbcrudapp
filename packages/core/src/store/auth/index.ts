@@ -1,17 +1,23 @@
 import create from 'zustand';
 
-import { LoginForm } from '../../types';
+import { LoginForm, User } from '../../types';
 
 type InitialState = {
   isLogged: boolean;
   login(value: LoginForm): void;
   logout(): void;
+
+  user: User | null;
+  setUser(payload: User): void;
 };
 
-const initialState = {
+const initialState: InitialState = {
   isLogged: false,
   login: null,
   logout: null,
+
+  user: null,
+  setUser: null,
 };
 
 export const useAuthStore = create<InitialState>((set) => ({
@@ -21,5 +27,8 @@ export const useAuthStore = create<InitialState>((set) => ({
   },
   logout() {
     set((state) => ({ ...state, isLogged: false }));
+  },
+  setUser(user: User) {
+    set((state) => ({ ...state, user }));
   },
 }));
