@@ -5,6 +5,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+import { useAuthStore } from '../../store/auth';
 
 interface Props {
   children?: React.ReactElement | React.ReactElement[];
@@ -25,7 +28,10 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
-  pageHeader: {},
+  pageHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   pageBody: {
     padding: theme.spacing(3),
   },
@@ -33,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Layout = ({ children }: Props) => {
   const classes = useStyles();
+  const { logout } = useAuthStore();
 
   return (
     <div className={classes.root}>
@@ -50,6 +57,9 @@ export const Layout = ({ children }: Props) => {
       <div className={classes.content}>
         <div className={classes.pageHeader}>
           <Typography variant='h4'>Header</Typography>
+          <Button variant='contained' color='primary' onClick={logout}>
+            Logout
+          </Button>
         </div>
         <div className={classes.pageBody}>{children}</div>
       </div>
