@@ -2,7 +2,7 @@ import create from 'zustand';
 
 import { LoginForm, User } from '../../types';
 
-type InitialState = {
+export type InitialState = {
   isLogged: boolean;
   login(value: LoginForm): void;
   logout(): void;
