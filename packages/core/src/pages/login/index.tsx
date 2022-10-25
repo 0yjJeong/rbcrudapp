@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 import { LoginForm } from '../../types';
 
@@ -26,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface LoginPageProps {
+  isLoginError?: boolean;
   submit?: (value: LoginForm) => Promise<any>;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ submit }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ isLoginError, submit }) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -44,8 +46,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ submit }) => {
     navigate('/');
   };
 
+  const alertFragment = <Alert color='error'>Login Error</Alert>;
+
   return (
     <Container className={classes.root}>
+      {alertFragment}
       <Typography variant='h4' align='center'>
         Login
       </Typography>

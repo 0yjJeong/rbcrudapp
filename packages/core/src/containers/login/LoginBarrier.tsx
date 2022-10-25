@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../../store/auth';
@@ -13,6 +13,7 @@ interface LoginBarrierProps {
 const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
   const navigate = useNavigate();
   const { isLogged, login, setUser } = useAuthStore();
+  const [loginError, setLoginError] = useState(false);
 
   if (!isLogged) {
     return (
@@ -22,7 +23,9 @@ const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
             try {
               await login({ username, password });
               navigate('/');
-            } catch (err) {}
+            } catch (err) {
+              setLoginError(true);
+            }
           }
         }}
       />

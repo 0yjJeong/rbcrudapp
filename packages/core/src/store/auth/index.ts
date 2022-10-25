@@ -4,8 +4,8 @@ import { LoginForm, User } from '../../types';
 
 export type InitialState = {
   isLogged: boolean;
-  login(value: LoginForm): void;
-  logout(): void;
+  login(value: LoginForm): Promise<void>;
+  logout(): Promise<void>;
 
   user: User | null;
   setUser(payload: User): void;
@@ -22,10 +22,10 @@ const initialState: InitialState = {
 
 export const useAuthStore = create<InitialState>((set) => ({
   ...initialState,
-  login() {
+  async login() {
     set((state) => ({ ...state, isLogged: true }));
   },
-  logout() {
+  async logout() {
     set((state) => ({ ...state, isLogged: false }));
   },
   setUser(user: User) {
