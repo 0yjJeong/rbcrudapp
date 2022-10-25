@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +32,6 @@ interface LoginPageProps {
 
 const LoginPage: React.FC<LoginPageProps> = ({ isLoginError, submit }) => {
   const classes = useStyles();
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -42,11 +40,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ isLoginError, submit }) => {
     e.preventDefault();
     if (submit) {
       await submit({ username, password });
+      window.location.reload();
     }
-    navigate('/');
   };
 
-  const alertFragment = <Alert color='error'>Login Error</Alert>;
+  const alertFragment = isLoginError && (
+    <Alert color='error'>Login Error</Alert>
+  );
 
   return (
     <Container className={classes.root}>

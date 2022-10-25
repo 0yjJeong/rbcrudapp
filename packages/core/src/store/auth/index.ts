@@ -22,10 +22,12 @@ const initialState: InitialState = {
 
 export const useAuthStore = create<InitialState>((set) => ({
   ...initialState,
-  async login() {
+  async login(value) {
+    localStorage.setItem('username', value.username);
     set((state) => ({ ...state, isLogged: true }));
   },
   async logout() {
+    localStorage.removeItem('username');
     set((state) => ({ ...state, isLogged: false }));
   },
   setUser(user: User) {
