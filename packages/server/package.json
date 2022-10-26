@@ -1,0 +1,33 @@
+{
+  "name": "@rbcrudapp/server",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/core.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint src --fix"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^18.2.0",
+    "query-string": "^7.1.1",
+    "react-query": "^3.39.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^18.11.5",
+    "@types/react": "^18.0.21",
+    "eslint-plugin-prettier": "^3.4.1",
+    "tsdx": "^0.14.1"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}
