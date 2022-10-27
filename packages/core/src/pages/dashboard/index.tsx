@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 
-import Layout from '../../layout/Layout';
+interface DashboardPageProps {
+  children?: React.ReactElement | React.ReactElement[];
+}
 
-const DashboardPage = () => {
+const DashboardPage = ({ children }: DashboardPageProps) => {
   return (
-    <Layout>
+    <>
       <Typography variant='h3'>Dashboard Page</Typography>
       <Link to='/login'>Go to login</Link>
-    </Layout>
+      {children}
+    </>
   );
 };
 

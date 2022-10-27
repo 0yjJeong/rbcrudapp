@@ -7,7 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { useAuthStore } from '../../store/auth';
+import { useAuth } from '../../api/auth';
+import { Outlet } from 'react-router-dom';
 
 interface Props {
   children?: React.ReactElement | React.ReactElement[];
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Layout = ({ children }: Props) => {
   const classes = useStyles();
-  const { logout } = useAuthStore();
+  const { logout } = useAuth();
 
   return (
     <div className={classes.root}>
@@ -61,7 +62,9 @@ export const Layout = ({ children }: Props) => {
             Logout
           </Button>
         </div>
-        <div className={classes.pageBody}>{children}</div>
+        <div className={classes.pageBody}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
+export type State = {
+  [key: string]: any;
+};
+
 export interface User {
   id?: string;
   username?: string;
   avatar?: string;
-}
-
-export interface LoginForm {
-  username: string;
-  password: string;
 }
 
 export type Id = string | number;

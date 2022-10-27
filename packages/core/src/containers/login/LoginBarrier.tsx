@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../../store/auth';
-import LoginPage from '../../pages/login';
 import { User } from '../../types';
-import Layout from '../../layout/Layout';
+import { useAuth } from '../../api/auth';
 
 interface LoginBarrierProps {
   getUser?: () => Promise<User>;
@@ -12,33 +11,20 @@ interface LoginBarrierProps {
 }
 
 const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
-  // const navigate = useNavigate();
-  const { login, setUser } = useAuthStore();
-  const [loginError, setLoginError] = useState(false);
+  const { checkAuth } = useAuth();
+  const { setUser } = useAuthStore();
 
-  if (localStorage.getItem('username')) {
-    return <Layout>{children}</Layout>;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkAuth({}).catch(() => navigate('/login'));
+  }, [checkAuth]);
 
   if (!getUser) {
     getUser().then((user) => setUser(user));
   }
 
-  return (
-    <LoginPage
-      isLoginError={loginError}
-      submit={async ({ username, password }) => {
-        if (login) {
-          try {
-            await login({ username, password });
-            window.location.replace('/');
-          } catch (err) {
-            setLoginError(true);
-          }
-        }
-      }}
-    />
-  );
+  return <>{children}</>;
 };
 
 export default LoginBarrier;

@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 
-import { LoginForm } from '../../types';
+import { useAuth } from '../../api/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,28 +25,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface LoginPageProps {
-  isLoginError?: boolean;
-  submit?: (value: LoginForm) => Promise<any>;
-}
-
-const LoginPage: React.FC<LoginPageProps> = ({ isLoginError, submit }) => {
+const LoginPage: React.FC = () => {
   const classes = useStyles();
+  const { login } = useAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
 
   const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
-    if (submit) {
-      await submit({ username, password });
-      window.location.reload();
+    if (login) {
+      try {
+        await login({ username, password });
+      } catch (err) {
+        setLoginError(true);
+      }
     }
   };
 
-  const alertFragment = isLoginError && (
-    <Alert color='error'>Login Error</Alert>
-  );
+  const alertFragment = loginError && <Alert color='error'>Login Error</Alert>;
 
   return (
     <Container className={classes.root}>

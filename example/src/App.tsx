@@ -2,10 +2,34 @@ import { Admin, Resource } from '@rbcrudapp/core';
 
 function App() {
   return (
-    <Admin>
-      <Resource id='resource-1' />
-      <Resource id='resource-2' />
-      <Resource id='resource-3' />
+    <Admin
+      authProvider={{
+        login: () => Promise.resolve(),
+        logout: () => Promise.resolve(),
+        checkAuth: () => Promise.resolve(),
+      }}
+    >
+      <Resource
+        id='resource-1'
+        list={false}
+        create={false}
+        edit={false}
+        show={false}
+      />
+      <Resource
+        id='resource-2'
+        list={false}
+        create={false}
+        edit={false}
+        show={false}
+      />
+      <Resource
+        id='resource-3'
+        list={false}
+        create={false}
+        edit={false}
+        show={false}
+      />
     </Admin>
   );
 }
