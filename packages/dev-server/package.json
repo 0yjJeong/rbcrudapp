@@ -1,0 +1,11 @@
+{
+  "name": "@rbcrudapp/dev-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "watch": "json-server --watch data.json"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}
