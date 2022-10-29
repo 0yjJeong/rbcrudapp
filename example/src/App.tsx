@@ -1,4 +1,5 @@
 import { Admin, Resource } from '@rbcrudapp/core';
+import { jsonServer } from '@rbcrudapp/server';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         logout: () => Promise.resolve(),
         checkAuth: () => Promise.resolve(),
       }}
+      dataProvider={jsonServer('http://localhost:3000')}
     >
       <Resource
         id='resource-1'

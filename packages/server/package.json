@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
-  "module": "dist/core.esm.js",
+  "module": "dist/server.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsdx watch",
