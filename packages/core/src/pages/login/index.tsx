@@ -38,6 +38,7 @@ const LoginPage: React.FC = () => {
     if (login) {
       try {
         await login({ username, password });
+        location.href = '/';
       } catch (err) {
         setLoginError(true);
       }

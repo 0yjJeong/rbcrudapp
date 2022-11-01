@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "yarn workspace @rbcrudapp/example dev",
+    "dev:server": "yarn workspace @rbcrudapp/dev-server watch",
     "build": "lerna run build --stream",
     "test": "cross-env CI=true lerna run test --stream --parallel",
     "lint": "lerna run lint --stream"

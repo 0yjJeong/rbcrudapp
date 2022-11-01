@@ -19,26 +19,19 @@ const Admin = ({ authProvider, dataProvider, children }: Props) => {
     <AuthContextProvider authProvider={authProvider}>
       <DataContextProvider dataProvider={dataProvider}>
         <BrowserRouter>
-          <LoginBarrier
-            getUser={() =>
-              Promise.resolve({
-                id: '1',
-                username: 'username',
-                avatar:
-                  'https://cdn.pixabay.com/photo/2022/10/15/21/23/cat-7523894_1280.jpg?w=600',
-              })
-            }
-          >
-            <Routes>
-              <Route path='/login' element={<LoginPage />} />
-              <Route element={<Layout />}>
-                <Route
-                  path='/'
-                  element={<DashboardPage>{children}</DashboardPage>}
-                />
-              </Route>
-            </Routes>
-          </LoginBarrier>
+          <Routes>
+            <Route path='/login' element={<LoginPage />} />
+            <Route element={<Layout />}>
+              <Route
+                path='/'
+                element={
+                  <LoginBarrier>
+                    <DashboardPage>{children}</DashboardPage>
+                  </LoginBarrier>
+                }
+              />
+            </Route>
+          </Routes>
         </BrowserRouter>
       </DataContextProvider>
     </AuthContextProvider>

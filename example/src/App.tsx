@@ -1,36 +1,46 @@
-import { Admin, Resource } from '@rbcrudapp/core';
+import { Admin, Resource, AuthProvider } from '@rbcrudapp/core';
 import { jsonServer } from '@rbcrudapp/server';
 
 function App() {
+  const authProvider: AuthProvider = {
+    login: (params: any) => {
+      if (params.username === 'admin') {
+        localStorage.setItem('username', params.username);
+        return Promise.resolve();
+      }
+      return Promise.reject();
+    },
+    logout: () => Promise.resolve(),
+    checkError: () => Promise.resolve(),
+    checkAuth: () =>
+      localStorage.getItem('username') ? Promise.resolve() : Promise.reject(),
+    getUserInfo: () =>
+      Promise.resolve({
+        id: '1',
+        username: 'username',
+        avatar:
+          'https://cdn.pixabay.com/photo/2022/10/15/21/23/cat-7523894_1280.jpg?w=600',
+      }),
+  };
+
   return (
     <Admin
-      authProvider={{
-        login: () => Promise.resolve(),
-        logout: () => Promise.resolve(),
-        checkAuth: () => Promise.resolve(),
-      }}
+      authProvider={authProvider}
       dataProvider={jsonServer('http://localhost:3000')}
     >
       <Resource
         id='resource-1'
-        list={false}
-        create={false}
-        edit={false}
-        show={false}
+        ListComponent={() => <>ListComponent</>}
+        CreateComponent={() => <>CreateComponent</>}
+        EditComponent={() => <>EditComponent</>}
+        isDelete
       />
       <Resource
         id='resource-2'
-        list={false}
-        create={false}
-        edit={false}
-        show={false}
-      />
-      <Resource
-        id='resource-3'
-        list={false}
-        create={false}
-        edit={false}
-        show={false}
+        ListComponent={() => <></>}
+        CreateComponent={() => <></>}
+        EditComponent={() => <></>}
+        isDelete
       />
     </Admin>
   );

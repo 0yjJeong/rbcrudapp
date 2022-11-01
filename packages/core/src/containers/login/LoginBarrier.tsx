@@ -6,12 +6,11 @@ import { User } from '../../types';
 import { useAuth } from '../../api/auth';
 
 interface LoginBarrierProps {
-  getUser?: () => Promise<User>;
   children?: React.ReactElement | React.ReactElement[];
 }
 
-const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
-  const { checkAuth } = useAuth();
+const LoginBarrier: React.FC<LoginBarrierProps> = ({ children }) => {
+  const { checkAuth, getUserInfo } = useAuth();
   const { setUser } = useAuthStore();
 
   const navigate = useNavigate();
@@ -20,9 +19,11 @@ const LoginBarrier: React.FC<LoginBarrierProps> = ({ getUser, children }) => {
     checkAuth({}).catch(() => navigate('/login'));
   }, [checkAuth]);
 
-  if (!getUser) {
-    getUser().then((user) => setUser(user));
-  }
+  useEffect(() => {
+    if (getUserInfo) {
+      getUserInfo().then((user) => setUser(user));
+    }
+  }, [getUserInfo]);
 
   return <>{children}</>;
 };
