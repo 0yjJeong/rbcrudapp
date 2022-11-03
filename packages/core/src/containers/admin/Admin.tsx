@@ -19,19 +19,20 @@ const Admin = ({ authProvider, dataProvider, children }: Props) => {
     <AuthContextProvider authProvider={authProvider}>
       <DataContextProvider dataProvider={dataProvider}>
         <BrowserRouter>
-          <Routes>
-            <Route path='/login' element={<LoginPage />} />
-            <Route element={<Layout />}>
+          <LoginBarrier>
+            <Routes>
+              <Route path='resources/*' element={children} />
+              <Route path='login' element={<LoginPage />} />
               <Route
-                path='/'
+                index
                 element={
-                  <LoginBarrier>
-                    <DashboardPage>{children}</DashboardPage>
-                  </LoginBarrier>
+                  <Layout>
+                    <DashboardPage />
+                  </Layout>
                 }
               />
-            </Route>
-          </Routes>
+            </Routes>
+          </LoginBarrier>
         </BrowserRouter>
       </DataContextProvider>
     </AuthContextProvider>

@@ -14,17 +14,10 @@ const Resource = ({
   ListComponent,
   CreateComponent,
   EditComponent,
-  isDelete,
 }: Props) => {
   return (
     <Routes>
-      {getRoutes({
-        id,
-        ListComponent,
-        CreateComponent,
-        EditComponent,
-        isDelete,
-      })}
+      {getRoutes({ id, ListComponent, CreateComponent, EditComponent })}
     </Routes>
   );
 };
@@ -35,22 +28,28 @@ const getRoutes = ({
   EditComponent,
   ListComponent,
 }: Props) => {
-  const basePath = `/resources/${id}`;
+  const basePath = `/${id}`;
 
   const resourceRoutes: React.ReactElement[] = [];
 
   if (ListComponent) {
-    resourceRoutes.push(<Route path={basePath} element={<ListComponent />} />);
+    resourceRoutes.push(
+      <Route key={basePath} path={basePath} element={<ListComponent />} />
+    );
   }
 
   if (CreateComponent) {
     const path = `${basePath}/create`;
-    resourceRoutes.push(<Route path={path} element={<CreateComponent />} />);
+    resourceRoutes.push(
+      <Route key={path} path={path} element={<CreateComponent />} />
+    );
   }
 
   if (EditComponent) {
     const path = `${basePath}/edit/:id`;
-    resourceRoutes.push(<Route path={path} element={<EditComponent />} />);
+    resourceRoutes.push(
+      <Route key={path} path={path} element={<EditComponent />} />
+    );
   }
 
   return resourceRoutes;
