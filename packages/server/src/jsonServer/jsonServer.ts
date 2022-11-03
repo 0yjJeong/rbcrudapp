@@ -10,7 +10,7 @@ export type Result = {
 
 export type Pagination = {
   page: number;
-  perPage: number;
+  rowsPerPage: number;
 };
 
 export type GetListResponse = {
@@ -50,10 +50,10 @@ export interface ServerResponses {
 const jsonServer = (apiUrl: string): ServerResponses => {
   return {
     async getList(resourceId, params) {
-      const { page, perPage } = params.pagination;
+      const { page, rowsPerPage } = params.pagination;
       const query = {
-        _start: (page - 1) * perPage,
-        _end: page * perPage,
+        _page: (page - 1) * rowsPerPage + 1,
+        _limit: rowsPerPage,
       };
 
       const { data, headers } = await axios.get<Result[]>(

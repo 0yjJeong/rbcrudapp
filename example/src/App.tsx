@@ -1,4 +1,4 @@
-import { Admin, Resource, AuthProvider } from '@rbcrudapp/core';
+import { Admin, Resource, AuthProvider, Create, List } from '@rbcrudapp/core';
 import { jsonServer } from '@rbcrudapp/server';
 
 function App() {
@@ -30,15 +30,15 @@ function App() {
     >
       <Resource
         id='resource-1'
-        ListComponent={() => <>ListComponent</>}
-        CreateComponent={() => <>CreateComponent</>}
+        ListComponent={List}
+        CreateComponent={Create}
         EditComponent={() => <>EditComponent</>}
         isDelete
       />
       <Resource
         id='resource-2'
         ListComponent={() => <></>}
-        CreateComponent={() => <></>}
+        CreateComponent={Create}
         EditComponent={() => <></>}
         isDelete
       />

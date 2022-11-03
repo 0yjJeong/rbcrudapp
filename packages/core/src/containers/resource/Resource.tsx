@@ -1,10 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+import { ListProps, CreateProps } from '../../components';
+
 export interface Props {
   id: string;
-  ListComponent?: React.ComponentType<{}>;
-  CreateComponent?: React.ComponentType<{}>;
+  ListComponent?: React.ComponentType<ListProps>;
+  CreateComponent?: React.ComponentType<CreateProps>;
   EditComponent?: React.ComponentType<{}>;
   isDelete?: boolean;
 }
@@ -27,6 +29,7 @@ const getRoutes = ({
   CreateComponent,
   EditComponent,
   ListComponent,
+  isDelete,
 }: Props) => {
   const basePath = `/${id}`;
 
@@ -34,14 +37,29 @@ const getRoutes = ({
 
   if (ListComponent) {
     resourceRoutes.push(
-      <Route key={basePath} path={basePath} element={<ListComponent />} />
+      <Route
+        key={basePath}
+        path={basePath}
+        element={
+          <ListComponent
+            resourceId={id}
+            isCreate={!!CreateComponent}
+            isEdit={!!EditComponent}
+            isDelete={isDelete}
+          />
+        }
+      />
     );
   }
 
   if (CreateComponent) {
     const path = `${basePath}/create`;
     resourceRoutes.push(
-      <Route key={path} path={path} element={<CreateComponent />} />
+      <Route
+        key={path}
+        path={path}
+        element={<CreateComponent resourceId={id} />}
+      />
     );
   }
 
