@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import getFormData from 'get-form-data';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -30,18 +31,23 @@ const Create: React.FC<CreateProps> = ({ resourceId, children }) => {
     }
   );
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const values = getFormData(event.target);
     mutation.mutate({ resourceId, values });
   };
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child as any, {
-        resourceId,
-        onSubmit,
-        error: mutation.error,
-        isLoading: mutation.isLoading,
-      });
+      return React.cloneElement<{ resourceId?: string; [key: string]: any }>(
+        child as any,
+        {
+          resourceId,
+          onSubmit,
+          error: mutation.error,
+          isLoading: mutation.isLoading,
+        }
+      );
     }
     return child;
   });

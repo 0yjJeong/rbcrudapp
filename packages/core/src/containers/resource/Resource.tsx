@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { ListProps, CreateProps } from '../../components';
+import { ListProps, CreateProps, EditProps } from '../../components';
 
 export interface Props {
   id: string;
   ListComponent?: React.ComponentType<ListProps>;
   CreateComponent?: React.ComponentType<CreateProps>;
-  EditComponent?: React.ComponentType<{}>;
+  EditComponent?: React.ComponentType<EditProps>;
   isDelete?: boolean;
 }
 
@@ -66,7 +66,11 @@ const getRoutes = ({
   if (EditComponent) {
     const path = `${basePath}/edit/:id`;
     resourceRoutes.push(
-      <Route key={path} path={path} element={<EditComponent />} />
+      <Route
+        key={path}
+        path={path}
+        element={<EditComponent resourceId={id} />}
+      />
     );
   }
 

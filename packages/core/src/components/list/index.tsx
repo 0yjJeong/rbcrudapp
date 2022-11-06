@@ -73,7 +73,7 @@ const List: React.FC<ListProps> = ({
       retry: false,
     }
   );
-
+  console.log(data);
   if (!resourceId) {
     return <span>No resource id available</span>;
   }

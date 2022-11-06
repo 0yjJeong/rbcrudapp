@@ -1,6 +1,8 @@
 import { Admin, Resource, AuthProvider } from '@rbcrudapp/core';
 import { jsonServer } from '@rbcrudapp/server';
 
+import { CategoryList, CategoryCreate, CategoryEdit } from './category';
+import { PostList, PostCreate, PostEdit } from './post';
 import { UserList } from './user';
 
 function App() {
@@ -30,6 +32,18 @@ function App() {
       authProvider={authProvider}
       dataProvider={jsonServer('http://localhost:3000')}
     >
+      <Resource
+        id='categories'
+        ListComponent={CategoryList}
+        CreateComponent={CategoryCreate}
+        EditComponent={CategoryEdit}
+      />
+      <Resource
+        id='posts'
+        ListComponent={PostList}
+        CreateComponent={PostCreate}
+        EditComponent={PostEdit}
+      />
       <Resource id='users' ListComponent={UserList} />
     </Admin>
   );
