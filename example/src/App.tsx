@@ -1,5 +1,7 @@
-import { Admin, Resource, AuthProvider, Create, List } from '@rbcrudapp/core';
+import { Admin, Resource, AuthProvider } from '@rbcrudapp/core';
 import { jsonServer } from '@rbcrudapp/server';
+
+import { UserList } from './user';
 
 function App() {
   const authProvider: AuthProvider = {
@@ -28,20 +30,7 @@ function App() {
       authProvider={authProvider}
       dataProvider={jsonServer('http://localhost:3000')}
     >
-      <Resource
-        id='resource-1'
-        ListComponent={List}
-        CreateComponent={Create}
-        EditComponent={() => <>EditComponent</>}
-        isDelete
-      />
-      <Resource
-        id='resource-2'
-        ListComponent={() => <></>}
-        CreateComponent={Create}
-        EditComponent={() => <></>}
-        isDelete
-      />
+      <Resource id='users' ListComponent={UserList} />
     </Admin>
   );
 }

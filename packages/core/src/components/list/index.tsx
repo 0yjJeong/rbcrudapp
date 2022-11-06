@@ -8,15 +8,15 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Lists from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/styles';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 
 import { useData } from '../../api';
+import { TableProps } from '../table';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  content: { display: 'flex' },
+  content: { display: 'flex', flexDirection: 'column' },
   listHeader: {
     width: '100%',
     display: 'flex',
@@ -59,7 +59,7 @@ const List: React.FC<ListProps> = ({
   }
 
   const { data, isFetching } = useQuery<GetListResponse>(
-    [`resource/${resourceId}`, { pageSize }],
+    [`resource/list/${resourceId}`, { pageSize }],
     {
       queryFn: () => {
         return getList(resourceId, {
@@ -89,14 +89,7 @@ const List: React.FC<ListProps> = ({
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement<{
-        resourceId?: string;
-        loading?: boolean;
-        pagination: TablePaginationProps;
-        data?: Result;
-        isEdit?: boolean;
-        isDelete?: boolean;
-      }>(child as any, {
+      return React.cloneElement<TableProps>(child, {
         resourceId,
         pagination,
         loading: isFetching,
