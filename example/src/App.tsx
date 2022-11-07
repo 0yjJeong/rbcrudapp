@@ -1,7 +1,7 @@
 import { Admin, Resource, AuthProvider } from '@rbcrudapp/core';
 import { jsonServer } from '@rbcrudapp/server';
 
-import { CategoryList, CategoryCreate, CategoryEdit } from './category';
+import { CategoryList, CategoryCreate } from './category';
 import { PostList, PostCreate, PostEdit } from './post';
 import { UserList } from './user';
 
@@ -36,7 +36,6 @@ function App() {
         id='categories'
         ListComponent={CategoryList}
         CreateComponent={CategoryCreate}
-        EditComponent={CategoryEdit}
       />
       <Resource
         id='posts'

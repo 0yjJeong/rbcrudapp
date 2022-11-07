@@ -8,7 +8,7 @@ export interface Props {
   ListComponent?: React.ComponentType<ListProps>;
   CreateComponent?: React.ComponentType<CreateProps>;
   EditComponent?: React.ComponentType<EditProps>;
-  isDelete?: boolean;
+  isDeletable?: boolean;
 }
 
 const Resource = ({
@@ -16,10 +16,17 @@ const Resource = ({
   ListComponent,
   CreateComponent,
   EditComponent,
+  isDeletable,
 }: Props) => {
   return (
     <Routes>
-      {getRoutes({ id, ListComponent, CreateComponent, EditComponent })}
+      {getRoutes({
+        id,
+        ListComponent,
+        CreateComponent,
+        EditComponent,
+        isDeletable,
+      })}
     </Routes>
   );
 };
@@ -29,11 +36,14 @@ const getRoutes = ({
   CreateComponent,
   EditComponent,
   ListComponent,
-  isDelete,
+  isDeletable,
 }: Props) => {
   const basePath = `/${id}`;
 
   const resourceRoutes: React.ReactElement[] = [];
+
+  const isCreatable = !!CreateComponent;
+  const isEditable = !!EditComponent;
 
   if (ListComponent) {
     resourceRoutes.push(
@@ -43,9 +53,9 @@ const getRoutes = ({
         element={
           <ListComponent
             resourceId={id}
-            isCreate={!!CreateComponent}
-            isEdit={!!EditComponent}
-            isDelete={isDelete}
+            isCreatable={isCreatable}
+            isEditable={isEditable}
+            isDeletable={isDeletable}
           />
         }
       />
@@ -58,7 +68,7 @@ const getRoutes = ({
       <Route
         key={path}
         path={path}
-        element={<CreateComponent resourceId={id} />}
+        element={<CreateComponent resourceId={id} isEditable={isEditable} />}
       />
     );
   }

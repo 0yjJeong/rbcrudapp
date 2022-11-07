@@ -2,7 +2,7 @@ import React from 'react';
 import humanizeString from 'humanize-string';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { GetListResponse, Result } from '@rbcrudapp/server';
+import { GetListResponse } from '@rbcrudapp/server';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -28,17 +28,17 @@ const useStyles = makeStyles((theme) => ({
 
 export interface ListProps {
   resourceId?: string;
-  isCreate?: boolean;
-  isEdit?: boolean;
-  isDelete?: boolean;
+  isCreatable?: boolean;
+  isEditable?: boolean;
+  isDeletable?: boolean;
   children?: React.ReactElement | React.ReactElement[];
 }
 
 const List: React.FC<ListProps> = ({
   resourceId,
-  isCreate,
-  isEdit,
-  isDelete,
+  isCreatable,
+  isEditable,
+  isDeletable,
   children,
 }) => {
   const classes = useStyles();
@@ -93,8 +93,8 @@ const List: React.FC<ListProps> = ({
         resourceId,
         pagination,
         loading: isFetching,
-        isEdit,
-        isDelete,
+        isEditable,
+        isDeletable,
       });
     }
     return child;
@@ -107,7 +107,7 @@ const List: React.FC<ListProps> = ({
           <Typography variant='h5' component='h2'>
             {humanizeString(resourceId)}
           </Typography>
-          {isCreate && (
+          {isCreatable && (
             <Button
               variant='contained'
               color='primary'

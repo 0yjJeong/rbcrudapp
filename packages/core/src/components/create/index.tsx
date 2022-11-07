@@ -10,10 +10,15 @@ import { useData } from '../../api';
 
 export interface CreateProps {
   resourceId?: string;
+  isEditable?: boolean;
   children?: React.ReactElement | React.ReactElement[];
 }
 
-const Create: React.FC<CreateProps> = ({ resourceId, children }) => {
+const Create: React.FC<CreateProps> = ({
+  resourceId,
+  isEditable,
+  children,
+}) => {
   const { create } = useData();
   const navigate = useNavigate();
 
@@ -25,7 +30,10 @@ const Create: React.FC<CreateProps> = ({ resourceId, children }) => {
     ({ resourceId, values }: { resourceId: string; values: any }) =>
       create(resourceId, values),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        if (isEditable) {
+          return navigate(`/resources/${resourceId}/edit/${data.data.id}`);
+        }
         return navigate(`/resources/${resourceId}`);
       },
     }

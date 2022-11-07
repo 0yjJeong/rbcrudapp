@@ -26,8 +26,8 @@ export interface TableProps {
   rows?: Array<Result>;
   loading?: boolean;
   pagination?: TablePaginationProps;
-  isEdit?: boolean;
-  isDelete?: boolean;
+  isEditable?: boolean;
+  isDeletable?: boolean;
   onConfirmDelete?: (id: any) => void;
   children?: React.ReactElement | React.ReactElement[];
 }
@@ -35,8 +35,8 @@ export interface TableProps {
 const Table: React.FC<TableProps> = ({
   resourceId,
   rows,
-  isEdit,
-  isDelete,
+  isEditable,
+  isDeletable,
   children,
 }) => {
   const classes = useStyles();
@@ -66,7 +66,7 @@ const Table: React.FC<TableProps> = ({
         <TableHead>
           <TableRow>
             {children}
-            <TableCell>{(isEdit || isDelete) && 'Actions'}</TableCell>
+            <TableCell>{(isEditable || isDeletable) && 'Actions'}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -119,16 +119,16 @@ const useExtendedTableCellStyles = makeStyles((theme) => ({
 interface ExtendedTableCellProps {
   resourceId: string;
   id?: string | number;
-  isEdit?: boolean;
-  isDelete?: boolean;
+  isEditable?: boolean;
+  isDeletable?: boolean;
   onConfirmDelete?: () => void;
 }
 
 const ExtendedTableCell: React.FC<ExtendedTableCellProps> = ({
   resourceId,
   id,
-  isEdit,
-  isDelete,
+  isEditable,
+  isDeletable,
   onConfirmDelete,
 }) => {
   const classes = useExtendedTableCellStyles();
@@ -141,7 +141,7 @@ const ExtendedTableCell: React.FC<ExtendedTableCellProps> = ({
     setOpen(true);
   };
 
-  const EditButtonFragment = isEdit && (
+  const EditButtonFragment = isEditable && (
     <Button
       type='button'
       variant='contained'
@@ -154,7 +154,7 @@ const ExtendedTableCell: React.FC<ExtendedTableCellProps> = ({
     </Button>
   );
 
-  const DeleteButtonFragment = isDelete && (
+  const DeleteButtonFragment = isDeletable && (
     <Button
       ref={anchorEl}
       variant='outlined'
