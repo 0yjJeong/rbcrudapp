@@ -46,7 +46,7 @@ const List: React.FC<ListProps> = ({
   const { getList } = useData();
   const queryParams = new URLSearchParams(useLocation().search);
 
-  let page = 1;
+  let page = 0;
   const queryParamPage = queryParams.get('page');
   if (queryParamPage) {
     page = +queryParamPage;
@@ -59,7 +59,7 @@ const List: React.FC<ListProps> = ({
   }
 
   const { data, isFetching } = useQuery<GetListResponse>(
-    [`resource/list/${resourceId}`, { pageSize }],
+    [`resource/list/${resourceId}`, { page, pageSize }],
     {
       queryFn: () => {
         return getList(resourceId, {
@@ -70,7 +70,6 @@ const List: React.FC<ListProps> = ({
         });
       },
       keepPreviousData: true,
-      retry: false,
     }
   );
   console.log(data);

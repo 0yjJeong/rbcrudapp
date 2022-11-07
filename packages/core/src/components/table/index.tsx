@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import TablePagination from '@material-ui/core/TablePagination';
 import Popper from '@material-ui/core/Popper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -17,6 +18,7 @@ import { useData } from '../../api';
 import Column from './Column';
 
 const useStyles = makeStyles(() => ({
+  root: {},
   tableOuter: {},
   tableInner: {},
 }));
@@ -35,11 +37,14 @@ export interface TableProps {
 const Table: React.FC<TableProps> = ({
   resourceId,
   rows,
+  loading,
+  pagination,
   isEditable,
   isDeletable,
   children,
 }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const { deleteOne } = useData();
 
@@ -60,38 +65,55 @@ const Table: React.FC<TableProps> = ({
     }
   );
 
+  if (loading) {
+    return null;
+  }
+
   return (
-    <TableOuter className={classes.tableOuter}>
-      <TableInner className={classes.tableInner}>
-        <TableHead>
-          <TableRow>
-            {children}
-            <TableCell>{(isEditable || isDeletable) && 'Actions'}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows?.map((row) => (
-            <TableRow key={row.id}>
-              {Object.keys(row).map((item) => (
-                <TableCell key={item}>{row[item]}</TableCell>
-              ))}
-              <ExtendedTableCell
-                resourceId={resourceId}
-                id={row.id}
-                onConfirmDelete={() =>
-                  mutation.mutate({ resourceId, id: row.id })
-                }
-              />
+    <div className={classes.root}>
+      <TableOuter className={classes.tableOuter}>
+        <TableInner className={classes.tableInner}>
+          <TableHead>
+            <TableRow>
+              {children}
+              <TableCell>{(isEditable || isDeletable) && 'Actions'}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </TableInner>
-    </TableOuter>
+          </TableHead>
+          <TableBody>
+            {rows?.map((row) => (
+              <TableRow key={row.id}>
+                {Object.keys(row).map((item) => (
+                  <TableCell key={item}>{row[item]}</TableCell>
+                ))}
+                <ExtendedTableCell
+                  resourceId={resourceId}
+                  id={row.id}
+                  onConfirmDelete={() =>
+                    mutation.mutate({ resourceId, id: row.id })
+                  }
+                />
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableInner>
+      </TableOuter>
+      <TablePagination
+        rowsPerPageOptions={[5]}
+        count={pagination.count}
+        rowsPerPage={pagination.rowsPerPage}
+        component='div'
+        page={pagination.page}
+        onPageChange={(_, newPage) => {
+          navigate(
+            `/resources/${resourceId}?page=${newPage}&pageSize=${pagination.rowsPerPage}`
+          );
+        }}
+      />
+    </div>
   );
 };
 
 const useExtendedTableCellStyles = makeStyles((theme) => ({
-  root: {},
   popper: {
     background: '#fff',
     border: '1px solid #dedede',

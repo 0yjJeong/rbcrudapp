@@ -52,7 +52,7 @@ const jsonServer = (apiUrl: string): ServerResponses => {
     async getList(resourceId, params) {
       const { page, rowsPerPage } = params.pagination;
       const query = {
-        _page: page,
+        _page: page + 1,
         _limit: rowsPerPage,
       };
 
