@@ -11,6 +11,8 @@ import {
   Form,
   FormItem,
   Input,
+  Select,
+  SelectItem,
 } from '@rbcrudapp/core';
 
 export const PostList: React.FC<ListProps> = (props) => {
@@ -34,6 +36,12 @@ export const PostCreate: React.FC<CreateProps> = (props) => {
         </FormItem>
         <FormItem label='Slug'>
           <Input name='slug' />
+        </FormItem>
+        <FormItem>
+          <Select defaultValue='active'>
+            <SelectItem value='active'>Active</SelectItem>
+            <SelectItem value='draft'>Draft</SelectItem>
+          </Select>
         </FormItem>
       </Form>
     </Create>

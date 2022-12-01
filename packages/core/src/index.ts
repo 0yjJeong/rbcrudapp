@@ -11,6 +11,8 @@ export {
   FormItem,
   Input,
   Textarea,
+  Select,
+  SelectItem,
 } from './components';
 
 export type { InitialState as InitialAuthState } from './store/auth';

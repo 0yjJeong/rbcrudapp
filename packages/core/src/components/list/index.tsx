@@ -72,7 +72,7 @@ const List: React.FC<ListProps> = ({
       keepPreviousData: true,
     }
   );
-  console.log(data);
+
   if (!resourceId) {
     return <span>No resource id available</span>;
   }
@@ -94,6 +94,7 @@ const List: React.FC<ListProps> = ({
         loading: isFetching,
         isEditable,
         isDeletable,
+        rows: data?.data ?? undefined,
       });
     }
     return child;
